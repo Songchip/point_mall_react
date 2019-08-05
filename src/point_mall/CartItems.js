@@ -51,12 +51,13 @@ class CartItems extends React.Component {
                 }
             }
         ).then((response) => {
-            console.log(response)
-            if (response.status == "HTTP_402_PAYMENT_REQUIRED"){
-                alert("포인트가 부족합니다.")
-            }
             localStorage.removeItem('cart_items')
             this.props.history.push('/me/items')
+        }).catch((error) => {
+            console.log(error)
+            if (error.response.status === 402) {
+                alert("포인트가 부족합니다.")
+            }
         });
     }
 
