@@ -25,7 +25,7 @@ class CartItems extends React.Component {
         else {
             cartItems = JSON.parse(cartItems);
         }
-        
+
         this.setState({
             cartItems
         });
@@ -33,43 +33,28 @@ class CartItems extends React.Component {
 
 
     purchase = () => {
-        let itemsQueue = [];
-        for(let cartItem of this.state.cartItems){
-            for(let i =0; i<cartItem.count; i++){
-                itemsQueue.push(cartItem.item.id);
-            }
+        const items = [];
+        for (let cartItem of this.state.cartItems) {
+            items.push({
+                item_id: cartItem.item.id,
+                count: cartItem.count
+            })
         }
-        
-
-        this.purchaseNextItem(itemsQueue);
-    }
-
-    purchaseNextItem = (itemsQueue) => {
-
-        const count = this.state.count;
-
-        if(itemsQueue.length < 1){
-            localStorage.setItem('cart_items', '[]');
-            this.props.history.push('/me/items');
-        }
-        else {
-            const itemId = itemsQueue.shift();
-            
-            axios.post('http://localhost:8001/items/' + itemId + '/purchase/',
-                {
-                    count: count
-                },
-                {
-                    headers: {
-                        'Authorization': localStorage.getItem('authorization')
-                    }
+        axios.post('http://localhost:8001/items/purchase/',
+            {
+                items
+            },
+            {
+                headers: {
+                    'Authorization': localStorage.getItem('authorization')
                 }
-            ).then((response) => {
-                this.purchaseNextItem(itemsQueue);
-            });
-        }
+            }
+        ).then((response) => {
+            localStorage.removeItem('cart_items')
+            this.props.history.push('/me/items')
+        });
     }
-   
+
 
     render() {
 
