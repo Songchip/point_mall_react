@@ -19,7 +19,7 @@ class CartItems extends React.Component {
     }
 
     indexItems = () => {
-        let cartItems = DataHelper.getAuthToken();
+        let cartItems = localStorage.getItem('cart_items');
         if (cartItems == null || cartItems.length < 1) {
             cartItems = [];
         }
