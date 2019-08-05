@@ -17,7 +17,7 @@ class Home extends React.Component {
     }
 
     indexItems() {
-        axios.get('http://localhost:8003/items/')
+        axios.get('http://localhost:8001/items/')
             .then((response) => {
                 const items = response.data;
                 this.setState({

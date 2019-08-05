@@ -9,6 +9,7 @@ import Footer from './point_mall/Footer';
 import ItemDetail from './point_mall/ItemDetail';
 import MyItems from './point_mall/MyItems';
 import Categories from './point_mall/Categories';
+import CartItems from './point_mall/CartItems';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/items/:itemId" component={ItemDetail} />
           <Route exact path="/me/items" component={MyItems} />
           <Route exact path="/categories/:categoryId" component={Categories} />
+          <Route exact path="/cart/items" component={CartItems} />
         </Switch>
         <Footer />
       </div>

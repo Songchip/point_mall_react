@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ItemBox from './ItemBox';
-import { withRouter } from 'react-router-dom';
+
 
 
 
@@ -26,7 +26,7 @@ class Categories extends React.Component {
 
     getItem = () => {
         const categoryId = this.props.match.params.categoryId;
-        axios.get('http://localhost:8003/categories/' + categoryId + '/items/')
+        axios.get('http://localhost:8001/categories/' + categoryId + '/items/')
             .then((response) => {
                 const items = response.data;
                 this.setState({
@@ -56,4 +56,4 @@ class Categories extends React.Component {
 }
 
 
-export default withRouter(Categories);
+export default Categories;

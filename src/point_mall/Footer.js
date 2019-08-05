@@ -8,7 +8,7 @@ function Footer() {
     return (
         <footer>
             <p>PointMall</p>
-            <p>Email: suppoty@PointMall.com</p>
+            <p>Email: support@PointMall.com</p>
         </footer>
     );
 }

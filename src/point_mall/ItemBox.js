@@ -16,7 +16,7 @@ class ItemBox extends React.Component {
         const count = this.props.count;
         let image = item.image;
         if (!image.startsWith('http')) {
-            image = 'http://localhost:8003' + image;
+            image = 'http://localhost:8001' + image;
         }
         return (
             <div key={item.id} className="item-container" onClick={this.goToItem}>

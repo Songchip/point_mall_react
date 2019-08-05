@@ -18,7 +18,7 @@ class Header extends React.Component {
     }
 
     indexCategories() {
-        axios.get('http://localhost:8003/categories/').then((response) => {
+        axios.get('http://localhost:8001/categories/').then((response) => {
             const categories = response.data;
             this.setState({
                 categories: categories
@@ -47,6 +47,7 @@ class Header extends React.Component {
                 <br></br>
                 <div className="header-right2">
                     <Link to="/me/items">MyItems</Link>
+                    <Link to="/cart/items">Cart</Link>
                 </div>
             </header>
         );

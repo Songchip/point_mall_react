@@ -17,8 +17,8 @@ class MyItems extends React.Component {
         this.indexItems();
     }
 
-    indexItems() {
-        axios.get('http://localhost:8003/me/items/',
+    indexItems = () => {
+        axios.get('http://localhost:8001/me/items/',
             {
                 headers: {
                     'Authorization': localStorage.getItem('authorization')
@@ -34,7 +34,7 @@ class MyItems extends React.Component {
 
     getUser = () => { 
         axios.get(
-            'http://localhost:8003/me/', {
+            'http://localhost:8001/me/', {
                 headers: {
                     'Authorization': localStorage.getItem('authorization')
                 }

@@ -1,6 +1,7 @@
-import React from 'react';
+ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { createContext } from 'istanbul-lib-report';
 
 
 
@@ -10,7 +11,7 @@ class ItemDetail extends React.Component {
         super(props);
         this.state = {
             item: null,
-            count: 0
+            count: 1
         };
     }
 
@@ -20,7 +21,7 @@ class ItemDetail extends React.Component {
 
     getItem = () => {
         const itemId = this.props.match.params.itemId;
-        axios.get('http://localhost:8003/items/' + itemId)
+        axios.get('http://localhost:8001/items/' + itemId)
             .then((response) => {
                 const item = response.data;
                 this.setState({
@@ -42,7 +43,7 @@ class ItemDetail extends React.Component {
     puurchase = () => {
         const itemId = this.state.item.id;
         const count = this.state.count;
-        axios.post('http://localhost:8003/items/' + itemId + '/purchase/',
+        axios.post('http://localhost:8001/items/' + itemId + '/purchase/',
             {
                 count: count
             },
@@ -57,12 +58,56 @@ class ItemDetail extends React.Component {
         });
     }
 
+
+    addToCart = () => {
+        // [
+        //     {
+        //         item:{
+        //             id: 1,
+        //             title: 'dsf',
+        //         },
+        //         count: 1
+        //     }
+        // ]
+        const item = this.state.item;
+        const count = this.state.count;
+        let cartItems = localStorage.getItem('cart_items');
+        if (cartItems == null || cartItems.length < 1){
+            cartItems = [];
+        }
+        else {
+            cartItems = JSON.parse(cartItems);
+        }
+        let isAdded = false;
+
+        for (let cartItem of cartItems) {
+            if (cartItem.item.id == item.id) {
+                cartItem.count += count * 1;
+                isAdded = true;
+                break;
+            }
+        }
+
+        if(!isAdded){
+            cartItems.push({
+                item: item,
+                count: count,
+            });
+        }
+        localStorage.setItem('cart_items', JSON.stringify(cartItems));
+
+        
+        alert('장바구니에 담겼습니다.')
+   
+    }
+
     render() {
 
         const item = this.state.item;
         const title = this.state.item ? item.title : '';
         const desc = this.state.item ? item.description : '';
         const image = this.state.item ? item.image : null;
+        const count = this.state.count ? this.state.count : 1;
 
         return (
             <div id="container">
@@ -77,11 +122,12 @@ class ItemDetail extends React.Component {
                         {desc}
                     </p>
 
-                    <input type="number" value={this.state.count}
+                    <input type="number" value={count}
                         onChange={this.onInputChanged}
                         name = "countname" />
 
                     <button onClick={this.puurchase}>구입</button>
+                    <button onClick={this.addToCart}>장바구니에 담기</button>
                 </div>
             </div>
         );

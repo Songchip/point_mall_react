@@ -37,19 +37,19 @@
 
 
 header {
-    background-color: rgb(5, 5, 0);
+    background-color: rgb(103, 72, 173);
     padding: 30px 20px;
 }
 
 
 footer {
-    background-color: rgb(49, 49, 49);
+    background-color: rgb(103, 72, 173);
     padding: 20px 10px;
 }
 
 header a {
     margin: 10px;
-    color: rgb(245, 8, 8);
+    color: rgb(14, 0, 0);
 }
 
 .header-right {
@@ -67,7 +67,7 @@ header a {
 .item-container {
     width: 200px;
     height: 300px;
-    background-color: #bd3208;
+    background-color: #87b3d6;
     overflow:  hidden;
     float: left;
     margin: 10px;
@@ -103,10 +103,10 @@ header a {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    background-color: #fad9cf;
+    background-color: #b9d3fa;
 }
 
 .item-detail-container {
     margin: 20px;
-    background-color: #8f8b8a;
+    background-color: #bce9f1;
 }
