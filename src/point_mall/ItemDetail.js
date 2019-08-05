@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { createContext } from 'istanbul-lib-report';
-
+import DataHelper from '../DataHelper';
 
 
 class ItemDetail extends React.Component {
@@ -21,7 +21,7 @@ class ItemDetail extends React.Component {
 
     getItem = () => {
         const itemId = this.props.match.params.itemId;
-        axios.get('http://localhost:8001/items/' + itemId)
+        axios.get(DataHelper.baseURL() + '/items/' + itemId)
             .then((response) => {
                 const item = response.data;
                 this.setState({
@@ -43,13 +43,13 @@ class ItemDetail extends React.Component {
     puurchase = () => {
         const itemId = this.state.item.id;
         const count = this.state.count;
-        axios.post('http://localhost:8001/items/' + itemId + '/purchase/',
+        axios.post(DataHelper.baseURL() + '/items/' + itemId + '/purchase/',
             {
                 count: count
             },
             {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization')
+                    'Authorization': DataHelper.getAuthToken()
                 }
             }
         ).then((response) => {

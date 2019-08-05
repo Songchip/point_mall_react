@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ItemBox from './ItemBox';
 import { withRouter } from 'react-router-dom'
+import DataHelper from '../DataHelper';
 
 
 class CartItems extends React.Component {
@@ -18,7 +19,7 @@ class CartItems extends React.Component {
     }
 
     indexItems = () => {
-        let cartItems = localStorage.getItem('cart_items');
+        let cartItems = DataHelper.getAuthToken();
         if (cartItems == null || cartItems.length < 1) {
             cartItems = [];
         }
@@ -40,16 +41,20 @@ class CartItems extends React.Component {
                 count: cartItem.count
             })
         }
-        axios.post('http://localhost:8001/items/purchase/',
+        axios.post(DataHelper.baseURL() + '/items/purchase/',
             {
                 items
             },
             {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization')
+                    'Authorization': DataHelper.getAuthToken()
                 }
             }
         ).then((response) => {
+            console.log(response)
+            if (response.status == "HTTP_402_PAYMENT_REQUIRED"){
+                alert("포인트가 부족합니다.")
+            }
             localStorage.removeItem('cart_items')
             this.props.history.push('/me/items')
         });
