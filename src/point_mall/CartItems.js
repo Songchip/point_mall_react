@@ -3,8 +3,11 @@ import axios from 'axios';
 import ItemBox from './ItemBox';
 import { withRouter } from 'react-router-dom'
 import DataHelper from '../DataHelper';
+import { inject } from 'mobx-react';
 
 
+
+@inject('authStore')
 class CartItems extends React.Component {
     constructor(props) {
         super(props);
@@ -35,6 +38,7 @@ class CartItems extends React.Component {
 
     purchase = () => {
         const items = [];
+        const { authStore } = this.props;
         for (let cartItem of this.state.cartItems) {
             items.push({
                 item_id: cartItem.item.id,
@@ -47,7 +51,7 @@ class CartItems extends React.Component {
             },
             {
                 headers: {
-                    'Authorization': DataHelper.getAuthToken()
+                    'Authorization': authStore.authToken
                 }
             }
         ).then((response) => {
