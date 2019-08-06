@@ -41,7 +41,7 @@ class Categories extends React.Component {
                 <ItemBox key={item.id} item={item} />
             )
         });
-        console.log(items);
+
         return (
             <div>
                 <div id="container">

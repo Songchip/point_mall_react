@@ -1,7 +1,6 @@
  import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { createContext } from 'istanbul-lib-report';
 import DataHelper from '../DataHelper';
 
 
@@ -32,7 +31,7 @@ class ItemDetail extends React.Component {
 
     onInputChanged = (event) => {
         const target = event.target;
-        if (target.name == 'countname') {
+        if (target.name === 'countname') {
             this.setState({
                 count: target.value
             });
@@ -81,7 +80,7 @@ class ItemDetail extends React.Component {
         let isAdded = false;
 
         for (let cartItem of cartItems) {
-            if (cartItem.item.id == item.id) {
+            if (cartItem.item.id === item.id) {
                 cartItem.count += count * 1;
                 isAdded = true;
                 break;

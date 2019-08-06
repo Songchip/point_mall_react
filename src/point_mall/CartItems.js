@@ -72,7 +72,7 @@ class CartItems extends React.Component {
                     count={cartItem.count} />
             )
         });
-        console.log(items);
+
         return (
             <div>
                 <div id="container">

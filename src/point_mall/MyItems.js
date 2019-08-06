@@ -60,7 +60,7 @@ class MyItems extends React.Component {
                     count={userItem.count} />
             )
         });
-        console.log(items);
+
         return (
             <div>
                 <div id="container">

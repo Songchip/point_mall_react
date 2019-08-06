@@ -1,19 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { createCoverageMap } from 'istanbul-lib-coverage';
 import DataHelper from '../DataHelper';
+import { observer } from 'mobx-react'
 
+@observer
 class Header extends React.Component {
+    helper = new DataHelper();
 
     constructor(props) {
         super(props);
+
         this.state = {
-            categories : []
+            categories: []
         };
+
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.indexCategories();
     }
 
@@ -26,10 +30,14 @@ class Header extends React.Component {
         });
     }
 
+    logout = () =>{
+        this.helper.deleteToken();
+    }
+
     render() {
-        const categories = this.state.categories.map((category) =>{
+        const categories = this.state.categories.map((category) => {
             return (
-                <Link key = {category.id} to={'/categories/' + category.id}>{category.title}</Link>
+                <Link key={category.id} to={'/categories/' + category.id}>{category.title}</Link>
             )
         });
         return (
@@ -42,12 +50,17 @@ class Header extends React.Component {
                 </div>
 
                 <div className="header-right">
-                    <Link to="/login">Login</Link>
+                    {
+                        this.helper.isLoggedIn ?
+                        <button onClick={this.logout}>Logout</button> :
+                        <Link to="/login">Login</Link>
+                    }
                 </div>
                 <br></br>
                 <div className="header-right2">
                     <Link to="/me/items">MyItems</Link>
                     <Link to="/cart/items">Cart</Link>
+
                 </div>
             </header>
         );
