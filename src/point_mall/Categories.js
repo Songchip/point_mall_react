@@ -14,26 +14,27 @@ class Categories extends React.Component {
     }
 
     componentDidMount() {
-        this.getItem();
+        this.indexItems();
     }
 
     componentDidUpdate(prevProps){
         if(this.props.match.params.categoryId !== prevProps.match.params.categoryId){
-            this.getItem();
+            this.indexItems();
         }
        
     }
 
-    getItem = () => {
+    indexItems() {
         const categoryId = this.props.match.params.categoryId;
         axios.get(DataHelper.baseURL() + '/categories/' + categoryId + '/items/')
             .then((response) => {
                 const items = response.data;
                 this.setState({
                     items: items
-                })
+                });
             });
     }
+
 
     render() {
         const items = this.state.items.map((item) => {

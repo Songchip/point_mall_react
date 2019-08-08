@@ -5,7 +5,7 @@ import DataHelper from '../DataHelper';
 import { inject } from 'mobx-react';
 
 
-@inject('authStore')
+@inject('authStore', 'itemStore')
 class ItemDetail extends React.Component {
 
     constructor(props) {
@@ -71,35 +71,11 @@ class ItemDetail extends React.Component {
         //         count: 1
         //     }
         // ]
+        const { itemStore } = this.props;
         const item = this.state.item;
         const count = this.state.count;
-        let cartItems = localStorage.getItem('cart_items');
-        if (cartItems == null || cartItems.length < 1){
-            cartItems = [];
-        }
-        else {
-            cartItems = JSON.parse(cartItems);
-        }
-        let isAdded = false;
+        itemStore.addItemToCart(item);
 
-        for (let cartItem of cartItems) {
-            if (cartItem.item.id === item.id) {
-                cartItem.count += count * 1;
-                isAdded = true;
-                break;
-            }
-        }
-
-        if(!isAdded){
-            cartItems.push({
-                item: item,
-                count: count,
-            });
-        }
-        localStorage.setItem('cart_items', JSON.stringify(cartItems));
-
-        
-        alert('장바구니에 담겼습니다.')
    
     }
 

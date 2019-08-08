@@ -3,47 +3,23 @@ import axios from 'axios';
 import ItemBox from './ItemBox';
 import { withRouter } from 'react-router-dom'
 import DataHelper from '../DataHelper';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
 
 
-@inject('authStore')
+@inject('authStore', 'itemStore')
+@observer
 class CartItems extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cartItems: [],
-            count: 1,
-        }
-    }
-
-    componentDidMount() {
-        this.indexItems();
-    }
-
-    indexItems = () => {
-        let cartItems = localStorage.getItem('cart_items');
-        if (cartItems == null || cartItems.length < 1) {
-            cartItems = [];
-        }
-        else {
-            cartItems = JSON.parse(cartItems);
-        }
-
-        this.setState({
-            cartItems
-        });
-    }
-
+    
 
     purchase = () => {
         const items = [];
-        const { authStore } = this.props;
-        for (let cartItem of this.state.cartItems) {
+        const { authStore, itemStore } = this.props;
+        for (let cartItem of itemStore.cartItems) {
             items.push({
                 item_id: cartItem.item.id,
                 count: cartItem.count
-            })
+            });
         }
         axios.post(DataHelper.baseURL() + '/items/purchase/',
             {
@@ -65,10 +41,14 @@ class CartItems extends React.Component {
         });
     }
 
+    clearItems = () => {
+        const { itemStore } = this.props;
+        itemStore.clearCartItems();
+    }
 
     render() {
-
-        const items = this.state.cartItems.map((cartItem) => {
+        const { itemStore } = this.props;
+        const items = itemStore.cartItems.map((cartItem) => {
             const item = cartItem.item;
             return (
                 <ItemBox key={item.id}
@@ -82,6 +62,7 @@ class CartItems extends React.Component {
                 <div id="container">
                     <h1>장바구니</h1>
                     <button onClick={this.purchase}>구입</button>
+                    <button onClick={this.clearItems}>비우기</button>
                     <div id="item-list-container">
                         {items}
                     </div>
