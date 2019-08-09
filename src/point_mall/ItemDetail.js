@@ -74,8 +74,8 @@ class ItemDetail extends React.Component {
         const { itemStore } = this.props;
         const item = this.state.item;
         const count = this.state.count;
-        itemStore.addItemToCart(item);
-
+        itemStore.addItemToCart(item,count);
+        this.props.history.push('/');
    
     }
 

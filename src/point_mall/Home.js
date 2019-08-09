@@ -26,6 +26,7 @@ class Home extends React.Component {
     }
 
     render() {
+        console.log("!!!!!!!!!",this.state.items);
         // for문으로 item에 들어있는 모든 객체 탐색하여 ItemBox에 props를 넘김 그리고 items에 하나씩 list로 저장됨
         const items = this.state.items.map((item) => {
             return (

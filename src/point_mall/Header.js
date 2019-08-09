@@ -54,6 +54,7 @@ class Header extends React.Component {
                 </div>
 
                 <div className="header-right">
+                    <Link to="/register">회원가입</Link>
                     {
                         authStore.isLoggedIn ?
                         <button onClick={this.logout}>Logout</button> :

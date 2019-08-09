@@ -6,6 +6,7 @@ export default class ItemStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
         let cartItems = localStorage.getItem('cart_items');
+        
         if (cartItems == null || cartItems.length < 1) {
             cartItems = [];
         } else {
@@ -15,11 +16,12 @@ export default class ItemStore {
     }
 
     @action
-    addItemToCart(item) {
+    addItemToCart(item, count) {
         let isAdded = false;
+
         for (let cartItem of this.cartItems) {
             if (cartItem.item.id === item.id) {
-                cartItem.count++;
+                cartItem.count += (count * 1);
                 isAdded = true;
                 break;
             }
@@ -27,7 +29,7 @@ export default class ItemStore {
         if (!isAdded) {
             this.cartItems.push({
                 item: item,
-                count: 1
+                count: count
             });
         }
         this.saveCartItems();

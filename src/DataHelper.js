@@ -21,12 +21,12 @@ class DataHelper {
         localStorage.setItem('auth_token', this.authToken);
     }
 
-    getAuthToken() {
-        if (this.authToken == null) {
-            this.authToken = localStorage.getItem('auth_token');
-        }
-        return this.authToken;
-    }
+    // getAuthToken() {
+    //     if (this.authToken == null) {
+    //         this.authToken = localStorage.getItem('auth_token');
+    //     }
+    //     return this.authToken;
+    // }
 
     deleteToken() {
         localStorage.removeItem('auth_token');
@@ -48,10 +48,10 @@ class DataHelper {
         dataHelper.setAuthToken(token);
     }
 
-    static getAuthToken() {
-        const dataHelper = new DataHelper();
-        return dataHelper.getAuthToken();
-    }
+    // static getAuthToken() {
+    //     const dataHelper = new DataHelper();
+    //     return dataHelper.getAuthToken();
+    // }
 }
 
 
