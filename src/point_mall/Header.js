@@ -39,6 +39,8 @@ class Header extends React.Component {
 
     render() {
         const { authStore, itemStore } = this.props;
+        const username = authStore.user;
+        console.log(username);
         const categories = this.state.categories.map((category) => {
             return (
                 <Link key={category.id} to={'/categories/' + category.id}>{category.title}</Link>
@@ -47,22 +49,17 @@ class Header extends React.Component {
         return (
             <header>
                 <Link to="/">PointMall</Link>
+                <span id="type_right">
+                    {
+                        authStore.isLoggedIn && <span>사용자: {username}</span>
+                    }
+                </span>
                 <br></br>
                 {categories}
-
                 <div className="item-category">
                 </div>
 
                 <div className="header-right">
-                    <Link to="/register">회원가입</Link>
-                    {
-                        authStore.isLoggedIn ?
-                        <button onClick={this.logout}>Logout</button> :
-                        <Link to="/login">Login</Link>
-                    }
-                </div>
-
-                <div className="header-right2">
                     {
                         authStore.isLoggedIn && <Link to="/me/items">MyItems</Link>
                     }
@@ -71,6 +68,16 @@ class Header extends React.Component {
                     }
                     <Link to="/cart/items">Cart {itemStore.cartItemsCount}</Link>
 
+                    <Link to="/register">회원가입</Link>
+                    {
+                        authStore.isLoggedIn ?
+                            <button onClick={this.logout}>Logout</button>:
+                        <Link to="/login">Login</Link>
+                    }
+                </div>
+
+                <div className="header-right2">
+                   
                 </div>
             </header>
         );

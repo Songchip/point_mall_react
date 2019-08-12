@@ -111,3 +111,10 @@ header a {
     margin: 20px;
     background-color: #bce9f1;
 }
+
+
+span#type_right {
+  float: right;
+  color: rgb(92, 5, 80);
+  margin-right: 10px;
+}

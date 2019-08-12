@@ -41,7 +41,7 @@ class ItemDetail extends React.Component {
     }
 
 
-    puurchase = () => {
+    purchase = () => {
         const itemId = this.state.item.id;
         const {authStore} = this.props;
         const count = this.state.count;
@@ -104,7 +104,7 @@ class ItemDetail extends React.Component {
                         onChange={this.onInputChanged}
                         name = "countname" />
 
-                    <button onClick={this.puurchase}>구입</button>
+                    <button onClick={this.purchase}>구입</button>
                     <button onClick={this.addToCart}>장바구니에 담기</button>
                 </div>
             </div>
