@@ -11,7 +11,8 @@ import MyItems from './point_mall/MyItems';
 import Categories from './point_mall/Categories';
 import CartItems from './point_mall/CartItems';
 import ObserverTest from './observer/ObserverTest';
-import Register from './point_mall/Register';
+import Register from './point_mall/Register'
+import AddPoint from './point_mall/AddPoint'
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
           <Route exact path="/categories/:categoryId" component={Categories} />
           <Route exact path="/cart/items" component={CartItems} />
           <Route exact path="/observer-test" component={ObserverTest}/>
+          <Route exact path="/users/point_charge" component={AddPoint} />
+
         </Switch>
         <Footer />
       </div>

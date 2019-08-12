@@ -66,7 +66,9 @@ class Header extends React.Component {
                     {
                         authStore.isLoggedIn && <Link to="/me/items">MyItems</Link>
                     }
-                    
+                    {
+                        authStore.isLoggedIn && <Link to="/users/point_charge">AddPoint</Link>
+                    }
                     <Link to="/cart/items">Cart {itemStore.cartItemsCount}</Link>
 
                 </div>
