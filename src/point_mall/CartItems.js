@@ -1,16 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import ItemBox from './ItemBox';
 import { withRouter } from 'react-router-dom'
-import DataHelper from '../DataHelper';
 import { inject, observer } from 'mobx-react';
 
 
 
-@inject('authStore', 'itemStore')
+@inject('authStore', 'itemStore', 'httpService')
 @observer
 class CartItems extends React.Component {
-    
+
 
     purchase = () => {
         const items = [];
@@ -21,25 +19,17 @@ class CartItems extends React.Component {
                 count: cartItem.count
             });
         }
-        axios.post(DataHelper.baseURL() + '/items/purchase/',
-            {
-                items
-            },
-            {
-                headers: {
-                    'Authorization': authStore.authToken
+        this.props.httpService.purchaseItems(items)
+            .then((userItems) => {
+                itemStore.clearCartItems();
+                this.props.history.push('/me/items')
+            }).catch((error) => {
+                console.log(error)
+                if (error.response.status === 402) {
+                    alert("포인트가 부족합니다.")
+                    this.props.history.push('/users/point_charge/')
                 }
-            }
-        ).then((response) => {
-            localStorage.removeItem('cart_items')
-            this.props.history.push('/me/items')
-        }).catch((error) => {
-            console.log(error)
-            if (error.response.status === 402) {
-                alert("포인트가 부족합니다.")
-                this.props.history.push('/users/point_charge/')
-            }
-        });
+            });
     }
 
     clearItems = () => {

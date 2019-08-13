@@ -1,6 +1,5 @@
 import { observable, action, computed } from 'mobx'
 import axios from 'axios';
-import DataHelper from './DataHelper';
 
 
 
@@ -31,7 +30,7 @@ export default class AuthStore {
 
     getUser = () => {
         axios.get(
-            DataHelper.baseURL() + '/me/', {
+            this.BASE_URL + '/me/', {
                 headers: {
                     'Authorization': this.authToken
                 }

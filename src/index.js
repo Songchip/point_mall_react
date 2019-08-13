@@ -9,7 +9,10 @@ import RootStore from './RootStore';
 const rootStore = new RootStore();
 
 ReactDOM.render(
-    <Provider authStore={rootStore.authStore} itemStore={rootStore.itemStore}>
+    <Provider 
+    authStore={rootStore.authStore} 
+    itemStore={rootStore.itemStore}
+    httpService={rootStore.httpService}>
         <App />
     </Provider>,
     document.getElementById('root')

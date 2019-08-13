@@ -1,11 +1,9 @@
- import React from 'react';
-import axios from 'axios';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import DataHelper from '../DataHelper';
 import { inject } from 'mobx-react';
 
 
-@inject('authStore', 'itemStore')
+@inject('authStore', 'itemStore', 'httpService')
 class ItemDetail extends React.Component {
 
     constructor(props) {
@@ -22,9 +20,8 @@ class ItemDetail extends React.Component {
 
     getItem = () => {
         const itemId = this.props.match.params.itemId;
-        axios.get(DataHelper.baseURL() + '/items/' + itemId)
-            .then((response) => {
-                const item = response.data;
+        this.props.httpService.getItem(itemId)
+            .then((item) => {
                 this.setState({
                     item: item
                 })
@@ -43,20 +40,19 @@ class ItemDetail extends React.Component {
 
     purchase = () => {
         const itemId = this.state.item.id;
-        const {authStore} = this.props;
         const count = this.state.count;
-        axios.post(DataHelper.baseURL() + '/items/' + itemId + '/purchase/',
-            {
-                count: count
-            },
-            {
-                headers: {
-                    'Authorization': authStore.authToken
-                }
-            }
+        this.props.httpService.purchaseItem(
+            itemId,
+            count
         ).then((response) => {
             // console.log(response.data);
             this.props.history.push('/me/items')
+        }).catch((error) => {
+            console.log(error)
+            if (error.response.status === 402) {
+                alert("포인트가 부족합니다.")
+                this.props.history.push('/users/point_charge/')
+            }
         });
     }
 
@@ -74,9 +70,9 @@ class ItemDetail extends React.Component {
         const { itemStore } = this.props;
         const item = this.state.item;
         const count = this.state.count;
-        itemStore.addItemToCart(item,count);
+        itemStore.addItemToCart(item, count);
         this.props.history.push('/');
-   
+
     }
 
     render() {
@@ -102,7 +98,7 @@ class ItemDetail extends React.Component {
 
                     <input type="number" value={count}
                         onChange={this.onInputChanged}
-                        name = "countname" />
+                        name="countname" />
 
                     <button onClick={this.purchase}>구입</button>
                     <button onClick={this.addToCart}>장바구니에 담기</button>

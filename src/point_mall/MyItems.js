@@ -1,12 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import ItemBox from './ItemBox';
-import DataHelper from '../DataHelper';
 import { inject } from 'mobx-react';
 
 
 
-@inject('authStore')
+@inject('authStore', 'httpService')
 class MyItems extends React.Component {
     constructor(props) {
         super(props);
@@ -17,40 +15,26 @@ class MyItems extends React.Component {
     }
 
     componentDidMount() {
-        this.getUser();
-        this.indexItems();
+        this.getMe();
+        this.indexMyItems();
     }
 
-    indexItems = () => {
-        const { authStore } = this.props;
-        axios.get(DataHelper.baseURL() + '/me/items/',
-            {
-                headers: {
-                    'Authorization': authStore.authToken
-                }
-            }
-        ).then((response) => {
-            const items = response.data;
-            this.setState({
-                userItems: items
-            })
-        });
-    }
-
-    getUser = () => { 
-        const { authStore } = this.props;
-        axios.get(
-            DataHelper.baseURL() + '/me/', {
-                headers: {
-                    'Authorization': authStore.authToken
-                }
-            }
-        ).then((response) => {
-            const user = response.data;
-            this.setState({
-                user: user
+    indexMyItems = () => {
+        this.props.httpService.indexMyItems()
+            .then((userItems) => {
+                this.setState({
+                    userItems: userItems
+                })
             });
-        });
+    }
+
+    getMe = () => {
+        this.props.httpService.getMe()
+            .then((user) => {
+                this.setState({
+                    user: user
+                });
+            });
     }
 
     render() {
@@ -61,7 +45,7 @@ class MyItems extends React.Component {
             return (
                 <ItemBox key={item.id}
                     item={item}
-                    user = {user}
+                    user={user}
                     count={userItem.count} />
             )
         });

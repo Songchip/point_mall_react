@@ -1,14 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import DataHelper from '../DataHelper';
 import { observer, inject } from 'mobx-react';
 
 
-@inject('authStore', 'itemStore')
+@inject('authStore', 'itemStore', 'httpService')
 @observer
 class Header extends React.Component {
-    helper = new DataHelper();
 
     constructor(props) {
         super(props);
@@ -24,15 +21,19 @@ class Header extends React.Component {
     }
 
     indexCategories() {
-        axios.get(DataHelper.baseURL() + '/categories/').then((response) => {
-            const categories = response.data;
+        this.props.httpService.indexCategories()
+            .then((categories) => {
             this.setState({
                 categories: categories
             });
         });
     }
 
-    logout = () =>{
+    login = () => {
+        window.location.href = "/login";
+    }
+
+    logout = () => {
         const { authStore } = this.props;
         authStore.deleteToken();
     }
@@ -72,7 +73,7 @@ class Header extends React.Component {
                     {
                         authStore.isLoggedIn ?
                             <button onClick={this.logout}>Logout</button>:
-                        <Link to="/login">Login</Link>
+                            <button onClick={this.login}>Login</button>
                     }
                 </div>
 

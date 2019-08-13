@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import ItemBox from './ItemBox';
-import DataHelper from '../DataHelper';
+import { inject } from 'mobx-react';
 
 
-
+@inject('httpService')
 class Categories extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +16,8 @@ class Categories extends React.Component {
         this.indexItems();
     }
 
+
+    // 카테고리 하나 누른다음 다른 카테고리 누르면 화면에서 바로 바뀔수 있게 해줌
     componentDidUpdate(prevProps){
         if(this.props.match.params.categoryId !== prevProps.match.params.categoryId){
             this.indexItems();
@@ -26,9 +27,8 @@ class Categories extends React.Component {
 
     indexItems() {
         const categoryId = this.props.match.params.categoryId;
-        axios.get(DataHelper.baseURL() + '/categories/' + categoryId + '/items/')
-            .then((response) => {
-                const items = response.data;
+        this.props.httpService.indexCategoryItems(categoryId)
+            .then((items) => {
                 this.setState({
                     items: items
                 });

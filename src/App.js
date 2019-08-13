@@ -13,6 +13,7 @@ import CartItems from './point_mall/CartItems';
 import ObserverTest from './observer/ObserverTest';
 import Register from './point_mall/Register'
 import AddPoint from './point_mall/AddPoint'
+import PromiseTest from './promise/PromiseTest';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/cart/items" component={CartItems} />
           <Route exact path="/observer-test" component={ObserverTest}/>
           <Route exact path="/users/point_charge" component={AddPoint} />
+          <Route exact path="/promise-test" component={PromiseTest} />
 
         </Switch>
         <Footer />

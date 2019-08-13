@@ -1,11 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import DataHelper from '../DataHelper';
 import { inject } from 'mobx-react';
 
 
 
-@inject('authStore')
+@inject('authStore', 'httpService')
 class AddPoint extends React.Component {
     constructor(props) {
         super(props);
@@ -34,42 +32,23 @@ class AddPoint extends React.Component {
 
 
     getUser = () => {
-        const { authStore } = this.props;
-        axios.get(
-            DataHelper.baseURL() + '/me/', {
-                headers: {
-                    'Authorization': authStore.authToken
-                }
-            }
-        ).then((response) => {
-            const user = response.data;
-            this.setState({
-                user: user
+        this.props.httpService.getMe()
+            .then((user) => {
+                this.setState({
+                    user: user
+                });
             });
-        });
     }
 
     Add = () => {
-        const usersId = this.state.user.id;
+        const userId = this.state.user.id;
         const addPoint = this.state.addPoint;
-        const { authStore } = this.props;
-        axios.post(DataHelper.baseURL() + '/users/' + usersId + '/point_charge/',
-            {
-                point: addPoint
-            },
-            {
-                headers: {
-                    'Authorization': authStore.authToken
-                }
-            }
-            ).then((response) => {
+        this.props.httpService.addPoint(userId,addPoint)
+            .then((user) => {
                 alert("포인트 추가완료");
-                const point = response.data.point;
-                const user =response.data;
-                console.log(response.data)
                 this.setState({
                     user: user,
-                    userPoint: point
+                    userPoint: user.point
                 });
             });
 
