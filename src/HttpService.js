@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { reaction } from 'mobx';
-import { resolve } from 'q';
-
 
 
 class HttpService {
