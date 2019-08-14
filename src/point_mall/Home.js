@@ -16,12 +16,11 @@ class Home extends React.Component {
     }
 
     indexItems() {
-        axios.get(DataHelper.baseURL() + '/items/')
-            .then((response) => {
-                const items = response.data;
+        this.props.httpService.indexItems()
+            .then((items) => {
                 this.setState({
                     items: items
-                })
+                });
             });
     }
 
