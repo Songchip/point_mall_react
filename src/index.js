@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -9,12 +10,14 @@ import RootStore from './RootStore';
 const rootStore = new RootStore();
 
 ReactDOM.render(
-    <Provider 
-    authStore={rootStore.authStore} 
-    itemStore={rootStore.itemStore}
-    httpService={rootStore.httpService}>
-        <App />
-    </Provider>,
+    <Router history={rootStore.history}>
+        <Provider
+            authStore={rootStore.authStore}
+            itemStore={rootStore.itemStore}
+            httpService={rootStore.httpService}>
+            <App />
+        </Provider>
+    </Router>,
     document.getElementById('root')
 );
 
