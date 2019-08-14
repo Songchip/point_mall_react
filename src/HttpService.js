@@ -30,13 +30,28 @@ class HttpService {
                     this.rootStore.history.push('/login');
                 }
                 else {
+                    console.log(1);
                     if(!this.isRefreshingToken){
+                        console.log(2);
                         this.isRefreshingToken = true;
                         return new Promise((resolve, reject) => {
+                            console.log(3);
                             this.refreshToken().then(token => {
                                 originalRequest.headers.Authorization = this.authStore.authToken;
+
+                                // axios(originalRequest).then(response=>{
+                                //     resolve(response);
+                                // }).catch(error=>{
+                                //     reject(error);
+                                // });
+                                console.log(5);
+                                // token을 얻었으니 다시 getMe를 실행시켜봐라
                                 resolve(axios(originalRequest));
+
+                                console.log(6);
+                                // refreshSubscribers안에 있는 함수를 꺼내온게 subscriber임
                                 for(let subscriber of this.refreshSubscribers){
+                                    console.log(8);
                                     subscriber(token);
                                 }
                                 
@@ -49,6 +64,7 @@ class HttpService {
                                     subscriber(null);
                                 }
                             }).finally(()=>{
+                                console.log(10);
                                 this.isRefreshingToken = false;
                                 this.refreshSubscribers = [];
                             });
@@ -56,7 +72,10 @@ class HttpService {
                     }
 
                     return new Promise((resolve, reject) =>{
+                        console.log(7);
+                        // refreshSubscribers안에 다음 함수를 집어넣어놈
                         this.refreshSubscribers.push((token)=>{
+                            console.log(9);
                             if(token == null){
                                 reject(originalError);
                             }
@@ -146,6 +165,7 @@ class HttpService {
     }
 
     refreshToken() {
+        console.log(4);
         return axios.post('/o/token/', {
             grant_type: 'refresh_token',
             client_id: this.clientID,
