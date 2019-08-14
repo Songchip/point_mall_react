@@ -13,6 +13,8 @@ class HttpService {
         axios.defaults.baseURL = 'http://localhost:8001';
 
         axios.defaults.headers.common['Authorization'] = this.authStore.authToken;
+
+        // reaction은 초기화 이후 변화부터 감지하여 반응함
         reaction(() => this.authStore.authToken, () => {
             axios.defaults.headers.common['Authorization'] = this.authStore.authToken;
         });
