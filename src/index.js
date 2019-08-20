@@ -14,7 +14,8 @@ ReactDOM.render(
         <Provider
             authStore={rootStore.authStore}
             itemStore={rootStore.itemStore}
-            httpService={rootStore.httpService}>
+            httpService={rootStore.httpService}
+            history={rootStore.history}>
             <App />
         </Provider>
     </Router>,

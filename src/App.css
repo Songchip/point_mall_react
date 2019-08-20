@@ -24,7 +24,7 @@
 }
 
 @keyframes App-logo-spin {
-  from {
+  from { 
     transform: rotate(0deg);
   }
   to {
@@ -39,12 +39,14 @@
 header {
     background-color: rgb(103, 72, 173);
     padding: 30px 20px;
+    min-height: 30vh;
 }
 
 
 footer {
     background-color: rgb(103, 72, 173);
     padding: 20px 10px;
+
 }
 
 header a {
@@ -96,6 +98,12 @@ header a {
 }
 
 
+.history-container{
+  overflow: hidden;
+  border: 2px  solid #282c34;
+  margin: 20px;
+}
+
 .item-image-container {
     height: 300px;
     overflow: hidden;
@@ -116,5 +124,5 @@ header a {
 span#type_right {
   float: right;
   color: rgb(92, 5, 80);
-  margin-right: 10px;
+  margin: 7px 0px;
 }
