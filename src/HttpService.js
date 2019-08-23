@@ -9,11 +9,11 @@ class HttpService {
     constructor(rootStore) {
         this.rootStore = rootStore;
         this.authStore = rootStore.authStore;
-        this.clientID = 'kArNpsCWuOWxtTRaytkTSzLauatCH76i7qEz7ULb';
+        this.clientID = 'fURMuqxJJgISEmOLRzYYNHjmQoEBllgPQmr2uzHG';
         this.refreshSubscribers = [];
         this.isRefreshingToken = false;
 
-        axios.defaults.baseURL = 'http://localhost:8001';
+        axios.defaults.baseURL = 'http://api.pointmall.songchip.co.kr';
 
         axios.defaults.headers.common['Authorization'] = this.authStore.authToken;
 
