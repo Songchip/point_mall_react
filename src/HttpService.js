@@ -13,7 +13,7 @@ class HttpService {
         this.refreshSubscribers = [];
         this.isRefreshingToken = false;
 
-        axios.defaults.baseURL = 'http://api.pointmall.songchip.co.kr';
+        axios.defaults.baseURL = 'https://api.pointmall.songchip.co.kr';
 
         axios.defaults.headers.common['Authorization'] = this.authStore.authToken;
 
