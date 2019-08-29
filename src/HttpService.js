@@ -9,7 +9,7 @@ class HttpService {
     constructor(rootStore) {
         this.rootStore = rootStore;
         this.authStore = rootStore.authStore;
-        this.clientID = 'fURMuqxJJgISEmOLRzYYNHjmQoEBllgPQmr2uzHG';
+        this.clientID = 'NtySStzdCWxQLmkdJiVSC99W7JCdqEGsdHfiJaCp';
         this.refreshSubscribers = [];
         this.isRefreshingToken = false;
 
